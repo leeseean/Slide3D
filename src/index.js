@@ -68,9 +68,10 @@ class Slide3D {
         this.list.addEventListener('touchend', (e) => {
             const endX = e.changedTouches[0].pageX;
             const endY = e.changedTouches[0].pageY;
-            const direction = getDirection(endX - startX, endY - startY);
+            const direction = getDirection(endX - startX, endY - startY, 100);
             switch (direction) {
                 case 0:
+                    this.list.style.transform = `translate3d(0px, 0px, ${-this.radius}px) rotateY(${this.theta * this.roundFlag * -1}deg)`;
                     console.log("未滑动！");
                     break;
                 case 1:

@@ -4,11 +4,11 @@ export function getAngle(angX, angY) {
 }
 
 //根据起点终点返回方向 1向上 2向下 3向左 4向右 0未滑动
-export function getDirection(angX, angY) {
+export function getDirection(angX, angY, flagDistance) {
     let result = 0;
 
     //如果滑动距离太短
-    if (Math.abs(angX) < 2 && Math.abs(angY) < 2) {
+    if (Math.abs(angX) < flagDistance && Math.abs(angY) < flagDistance) {
         return result;
     }
 
