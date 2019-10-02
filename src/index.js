@@ -40,28 +40,29 @@ class Slide3D {
         this.theta = 360 / this.childrenCount;
         this.cellSize = this.children[0].offsetWidth;
         this.radius = Math.round(this.cellSize / 2 / Math.tan(Math.PI / this.childrenCount));
-        this.list.style.transform = `translate3d(0px, 0px, ${-this.radius}px) rotate3d(0, 1, 0, ${this.theta * this.currentIndex * -1}deg)`;
+        this.list.style.transform = `translate3d(0px, 0px, ${-this.radius}px) rotateY(${this.theta * this.currentIndex * -1}deg)`;
         this.children.forEach((element, _index) => {
             element.style.backfaceVisibility = 'hidden';
             element.style.position = 'absolute';
             element.style.zIndex = '1';
             element.style.opacity = '1';
-            element.style.transform = `rotate3d(0, 1, 0, ${this.theta * _index}deg) translate3d(0px, 0px, ${this.radius}px)`;
+            element.style.transform = `rotateY(${this.theta * _index}deg) translate3d(0px, 0px, ${this.radius}px)`;
         });
     }
     _addEvent() {
-        let startX, startY;
+        let startX, startY, degOld;
         this.list.addEventListener('touchstart', (e) => {
             startX = e.targetTouches[0].pageX;
             startY = e.targetTouches[0].pageY;
+            degOld = Number(this.list.style.transform.match(/rotateY\((.+)deg\)/)[1]);
         }, false);
         this.list.addEventListener('touchmove', (e) => {
             e.preventDefault();
             const curX = e.targetTouches[0].pageX;
-            // const curY = e.targetTouches[0].pageY;
             const angX = curX - startX;
-            const deg = this.theta * (angX / this.cellSize) * -1;
-            // this.list.style.transform = `translate3d(0px, 0px, ${-this.radius}px) rotate3d(0, 1, 0, ${this.theta * this.roundFlag * -1}deg)`;
+            const degPlus = this.theta * (angX / this.cellSize);
+            const degNew = degOld + degPlus;
+            this.list.style.transform = `translate3d(0px, 0px, ${-this.radius}px) rotateY(${degNew}deg)`;
 
         }, false);
         this.list.addEventListener('touchend', (e) => {
@@ -84,7 +85,7 @@ class Slide3D {
                         this.currentIndex = 0;
                     }
                     this.roundFlag = this.roundFlag + 1;
-                    this.list.style.transform = `translate3d(0px, 0px, ${-this.radius}px) rotate3d(0, 1, 0, ${this.theta * this.roundFlag * -1}deg)`;
+                    this.list.style.transform = `translate3d(0px, 0px, ${-this.radius}px) rotateY(${this.theta * this.roundFlag * -1}deg)`;
                     console.log("向左！");
                     break;
                 case 4:
@@ -93,7 +94,7 @@ class Slide3D {
                         this.currentIndex = this.childrenCount - 1;
                     }
                     this.roundFlag = this.roundFlag - 1;
-                    this.list.style.transform = `translate3d(0px, 0px, ${-this.radius}px) rotate3d(0, 1, 0, ${this.theta * this.roundFlag * -1}deg)`;
+                    this.list.style.transform = `translate3d(0px, 0px, ${-this.radius}px) rotateY(${this.theta * this.roundFlag * -1}deg)`;
                     console.log("向右！");
                     break;
                 default:
