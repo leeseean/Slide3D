@@ -11,8 +11,9 @@ class Slide3D {
         this.childrenCount = this.getChildrenCount();
         this.currentIndex = 0;//正面是哪一个
         this.roundFlag = 0;//转圈记录
-        document.querySelector(this.selector).innerHTML = this.getHtml();
+        document.querySelector(this.selector).innerHTML = this.getSlideHtml();
         this.list = document.querySelector(this.selector).querySelector('.slide-3d-list');
+        this.pagination = document.querySelector(this.selector).querySelector('.slide-pagination');
         this.children = [...this.list.children];
         this.setStyle();
         this._addEvent();
@@ -22,17 +23,20 @@ class Slide3D {
         div.innerHTML = this.innerDom;
         return div.children.length;
     }
-    getHtml() {
+    getPageHtml() {
         let pageDom = '';
-        for (const i = 0; i < this.childrenCount.length; i++) {
+        for (let i = 0; i < this.childrenCount; i++) {
             pageDom += `<div index="${i}" class="slide-dot ${this.currentIndex === i ? 'active' : ''}"></div>`;
         }
+        return pageDom;
+    }
+    getSlideHtml() {
         return `
             <div class="slide-3d-wrapper ${this.clsName}">
                 <div class="slide-3d-list">
                     ${this.innerDom}
                 </div>
-                <div class="slide-pagination">${pageDom}</div>
+                <div class="slide-pagination">${this.getPageHtml()}</div>
             </div>
         `;
     }
@@ -87,6 +91,7 @@ class Slide3D {
                     }
                     this.roundFlag = this.roundFlag + 1;
                     this.list.style.transform = `translate3d(0px, 0px, ${-this.radius}px) rotateY(${this.theta * this.roundFlag * -1}deg)`;
+                    this.pagination.innerHTML = this.getPageHtml();
                     console.log("向左！");
                     break;
                 case 4:
@@ -96,6 +101,7 @@ class Slide3D {
                     }
                     this.roundFlag = this.roundFlag - 1;
                     this.list.style.transform = `translate3d(0px, 0px, ${-this.radius}px) rotateY(${this.theta * this.roundFlag * -1}deg)`;
+                    this.pagination.innerHTML = this.getPageHtml();
                     console.log("向右！");
                     break;
                 default:

@@ -25,10 +25,11 @@
     width           : 10px;
     height          : 6px;
     background-color: gray;
+    margin          : 0 4px;
 }
 
 .slide-3d-wrapper .slide-dot.active {
     width           : 20px;
     height          : 6px;
-    background-color: orange;
+    background-color: purple;
 }
