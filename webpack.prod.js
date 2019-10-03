@@ -31,7 +31,8 @@ module.exports = {
 
     output: {
         filename: 'slide3d.min.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        libraryTarget: 'umd'
     },
 
     plugins: [new webpack.ProgressPlugin()],
