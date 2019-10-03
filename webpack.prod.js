@@ -30,7 +30,7 @@ module.exports = {
     entry: './src/index.js',
 
     output: {
-        filename: '[name].[chunkhash].js',
+        filename: 'slide3d.min.js',
         path: path.resolve(__dirname, 'dist')
     },
 

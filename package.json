@@ -2,15 +2,20 @@
     "name": "slide3d",
     "version": "1.0.0",
     "description": "My webpack project",
-    "main": "index.js",
+    "main": "dist/slide3d.min.js",
     "scripts": {
         "start": "webpack-dev-server --config webpack.dev.js",
         "build": "webpack  --config webpack.prod.js"
     },
     "keywords": [
         "slide",
+        "3D slide",
         "3D"
     ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/leeseean/Slide3D.git"
+    },
     "author": "leeseean",
     "license": "ISC",
     "devDependencies": {
