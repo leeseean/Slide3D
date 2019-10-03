@@ -15,6 +15,7 @@ const innerDom = `
 
 new Slide3D("#app", innerDom, 'className');
 ```
+<img src="https://s2.ax1x.com/2019/10/03/uw2U0g.gif" />
 #### 参数说明
 ```
 new Slide3D(挂载的dom节点, 滚动的内容, 自定义的css类名)
