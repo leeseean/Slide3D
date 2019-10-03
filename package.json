@@ -1,6 +1,6 @@
 {
     "name": "slide3d",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "h5手势切换界面插件",
     "main": "./dist/slide3d.min.js",
     "scripts": {
