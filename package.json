@@ -1,6 +1,6 @@
 {
     "name": "slide3d",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "My webpack project",
     "main": "dist/slide3d.min.js",
     "scripts": {
