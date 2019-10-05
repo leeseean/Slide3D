@@ -3,7 +3,7 @@ H5 3D手势切换界面
 ## 获取
 #### npm install slide3d
 ## 使用示例
-见[https://codesandbox.io/s/slide3d-example-g4lfv](https://codesandbox.io/s/slide3d-example-g4lfv)
+见[https://codesandbox.io/s/slide3d-example-7c0s9](https://codesandbox.io/s/slide3d-example-7c0s9)
 ```
 import Slide3D from 'slide3d';
 
