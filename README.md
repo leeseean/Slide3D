@@ -6,7 +6,7 @@ H5 3D手势切换界面
 见[https://codesandbox.io/s/slide3d-example-g4lfv](https://codesandbox.io/s/slide3d-example-g4lfv)，
 电脑调试时需要开启手机模式，只支持touch事件
 ```
-import Slide3D from '../src/index';
+import Slide3D from 'slide3d';
 
 const innerDom = `
   <div class="slide-item" index="1">1</div>
