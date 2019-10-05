@@ -1,5 +1,7 @@
 import {
-    getDirection
+    getDirection,
+    getEvents,
+    getPageXY
 } from './tools';
 import './style.css';
 
@@ -26,17 +28,17 @@ class Slide3D {
     getPageHtml() {
         let pageDom = '';
         for (let i = 0; i < this.childrenCount; i++) {
-            pageDom += `<div index="${i}" class="slide-dot ${this.currentIndex === i ? 'active' : ''}"></div>`;
+            pageDom += `<div index='${i}' class='slide-dot ${this.currentIndex === i ? 'active' : ''}'></div>`;
         }
         return pageDom;
     }
     getSlideHtml() {
         return `
-            <div class="slide-3d-wrapper ${this.clsName}">
-                <div class="slide-3d-list">
+            <div class='slide-3d-wrapper ${this.clsName}'>
+                <div class='slide-3d-list'>
                     ${this.innerDom}
                 </div>
-                <div class="slide-pagination">${this.getPageHtml()}</div>
+                <div class='slide-pagination'>${this.getPageHtml()}</div>
             </div>
         `;
     }
@@ -55,34 +57,39 @@ class Slide3D {
     }
     _addEvent() {
         let startX, startY, degOld;
-        this.list.addEventListener('touchstart', (e) => {
-            startX = e.targetTouches[0].pageX;
-            startY = e.targetTouches[0].pageY;
+        let isStartSliding = false;
+        const { startEvt, moveEvt, endEvt } = getEvents();
+        this.list.addEventListener(startEvt, (e) => {
+            isStartSliding = true;
+            startX = getPageXY(e).X;
+            startY = getPageXY(e).Y;
             degOld = Number(this.list.style.transform.match(/rotateY\((.+)deg\)/)[1]);
         }, false);
-        this.list.addEventListener('touchmove', (e) => {
+        this.list.addEventListener(moveEvt, (e) => {
+            if (!isStartSliding) return;
             e.preventDefault();
-            const curX = e.targetTouches[0].pageX;
+            const curX = getPageXY(e).X;
             const angX = curX - startX;
             const degPlus = this.theta * (angX / this.cellSize);
             const degNew = degOld + degPlus;
             this.list.style.transform = `translate3d(0px, 0px, ${-this.radius}px) rotateY(${degNew}deg)`;
-
         }, false);
-        this.list.addEventListener('touchend', (e) => {
-            const endX = e.changedTouches[0].pageX;
-            const endY = e.changedTouches[0].pageY;
+        document.addEventListener(endEvt, (e) => {
+            if (!isStartSliding) return;
+            isStartSliding = false;
+            const endX = getPageXY(e, true).X;
+            const endY = getPageXY(e, true).Y;
             const direction = getDirection(endX - startX, endY - startY, 100);
             switch (direction) {
                 case 0:
                     this.list.style.transform = `translate3d(0px, 0px, ${-this.radius}px) rotateY(${this.theta * this.roundFlag * -1}deg)`;
-                    console.log("未滑动！");
+                    console.log('未滑动！');
                     break;
                 case 1:
-                    console.log("向上！");
+                    console.log('向上！');
                     break;
                 case 2:
-                    console.log("向下！");
+                    console.log('向下！');
                     break;
                 case 3:
                     this.currentIndex = this.currentIndex + 1
@@ -92,7 +99,7 @@ class Slide3D {
                     this.roundFlag = this.roundFlag + 1;
                     this.list.style.transform = `translate3d(0px, 0px, ${-this.radius}px) rotateY(${this.theta * this.roundFlag * -1}deg)`;
                     this.pagination.innerHTML = this.getPageHtml();
-                    console.log("向左！");
+                    console.log('向左！');
                     break;
                 case 4:
                     this.currentIndex = this.currentIndex - 1
@@ -102,7 +109,7 @@ class Slide3D {
                     this.roundFlag = this.roundFlag - 1;
                     this.list.style.transform = `translate3d(0px, 0px, ${-this.radius}px) rotateY(${this.theta * this.roundFlag * -1}deg)`;
                     this.pagination.innerHTML = this.getPageHtml();
-                    console.log("向右！");
+                    console.log('向右！');
                     break;
                 default:
             }

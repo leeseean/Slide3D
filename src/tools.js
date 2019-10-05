@@ -25,3 +25,36 @@ export function getDirection(angX, angY, flagDistance) {
 
     return result;
 }
+
+export const isSupportTouch = 'ontouchend' in document ? true : false;
+
+export function getEvents() {
+    let startEvt, moveEvt, endEvt;
+    if (isSupportTouch) {
+        startEvt = 'touchstart';
+        moveEvt = 'touchmove';
+        endEvt = 'touchend';
+    } else {
+        startEvt = 'mousedown';
+        moveEvt = 'mousemove';
+        endEvt = 'mouseup';
+    }
+    return {
+        startEvt,
+        moveEvt,
+        endEvt
+    };
+}
+
+export function getPageXY(e, isEndEvt = false) {
+    if (isSupportTouch) {
+        return {
+            X: isEndEvt ? e.changedTouches[0].pageX : e.targetTouches[0].pageX,
+            Y: isEndEvt ? e.changedTouches[0].pageY : e.targetTouches[0].pageY,
+        };
+    }
+    return {
+        X: e.clientX,
+        Y: e.clientY
+    };
+}
